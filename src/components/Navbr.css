@@ -1,0 +1,35 @@
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled),
+button:not(:disabled) {
+  cursor: pointer;
+  margin-right: 0%;
+}
+.navbar-brand.box {
+  word-spacing: 8px;
+  font-size: 20px;
+  font-weight: 500;
+}
+.navbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  word-spacing: 12px;
+  padding: 0.5rem 0rem;
+  color: aliceblue;
+  padding-left: 10px;
+}
+/* .box0 {
+  background-color:rgb(232 211 211) !important;
+} */
+.bg-light.box0 {
+    background-color: rgb(241 247 252) !important;
+    width: 70%;
+    margin: auto;
+    margin-top: 1%;
+    border-radius: 10px;
+    height: 54px;
+}
