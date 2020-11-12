@@ -4,12 +4,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 <script defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfMs0nYWjYJPJSF_-obS1biNCEwL2_Pvw&libraries=places&callback=initMap">
 </script>
+
 
 ReactDOM.render(
   <React.StrictMode>
+  
     <App />
+  
   </React.StrictMode>,
   document.getElementById('root')
 );

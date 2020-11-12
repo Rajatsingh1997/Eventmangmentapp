@@ -1,0 +1,24 @@
+.search-location{
+    width: 100%;
+    margin-top: 14px;
+    margin-left: 4px;
+    height: 35px;
+   
+    border: 1px solid #bdbbbb; 
+    border-radius: 3px;
+}
+.location{
+    width:100%;
+}
+input[type=text] {
+    /* border: none;       Remove default borders */
+    padding: 4px 8px;
+    border-radius: 12px; 
+}
+input:focus {
+    
+    outline: 0px solid  rgb(241 247 252);  
+   }
+   .hidebox{
+        border:none;
+   }

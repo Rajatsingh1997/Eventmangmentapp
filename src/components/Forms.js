@@ -1,20 +1,44 @@
-import React from "react";
-import { MDBCol, MDBIcon } from "mdbreact";
-import "./Forms.css";
+import React, { Component } from "react";
+import Autocomplete from "react-google-autocomplete";
+export default class SearchLocation extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.handlePlaceSelected = this.handlePlaceSelected.bind(this);
+  }
+  handlePlaceSelected(place, input) {
+    if (this.props.handlePlaceSelecteds) {
+    }
+  }
 
-const SearchPage = () => {
-  return (
-    <MDBCol md="6" className="test">
-      <div className="input-group md-form form-sm form-1 pl-0">
-        <div className="input-group-prepend">
-          <span className="input-group-text purple lighten-3" id="basic-text1">
-            <MDBIcon className="text-white" icon="search" />
-          </span>
-        </div>
-        <input className="form-control my-0 py-1" type="text" placeholder="Search a Location" aria-label="Search" />
-      </div>
-    </MDBCol>
-  );
+  render() {
+    return (
+      <>
+        <Autocomplete
+          style={{
+            height: "35px",
+            paddingLeft: "16px",
+            marginTop: "2px",
+            width: "100%",
+            borderRadius: "3px",
+            outline: "none",
+            border: "1px",
+            fontSize: "15px",
+
+            ":focus": {
+              outline: "none",
+            },
+            ":active": {
+              outline: "none",
+            },
+          }}
+          onChange={(e) => {
+            this.setState({ address: e.target.value });
+          }}
+          onPlaceSelected={this.handlePlaceSelected}
+          types={["(regions)"]}
+        />
+      </>
+    );
+  }
 }
-
-export default SearchPage;

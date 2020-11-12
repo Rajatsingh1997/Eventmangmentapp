@@ -1,48 +1,56 @@
-// import React from 'react'
-// import React, { Component } from 'react';
-// import GoogleMapReact from 'google-map-react';
-// import { Map,InfoWindow,Marker,GoogleApiWrapper } from 'google-map-react'; 
-// function Map() {
-//     return (
-//         <div>
-//           <Map google  
-//         </div>
-//     )
-// }
+import React from "react";
+import {
+  withGoogleMap,
+  GoogleMap,
+  withScriptjs,
+  Marker,
+} from "react-google-maps";
+import Autocomplete from "react-google-autocomplete";
+import handlePlaceSelecteds from "./Forms";
+import SearchBox from "./Forms";
+const MAPS_URL = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCfMs0nYWjYJPJSF_-obS1biNCEwL2_Pvw&libraries=places`;
 
-// export default Map
-import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
- 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
- 
-class SimpleMap extends Component {
-  static defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
-    zoom: 11
-  };
- 
-  render() {
-    return (
-      // Important! Always set the container height explicitly
-      <div style={{ height: '100vh', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: AIzaSyAEJHPCqOwbEgeYFhqco4Q0BVFJRSw0biE  }}
-          defaultCenter={this.props.center}
-          defaultZoom={this.props.zoom}
-        >
-          <AnyReactComponent
-            lat={59.955413}
-            lng={30.337844}
-            text="My Marker"
+function Map(props) {
+  const AsyncMap = withScriptjs(
+    withGoogleMap((mapProps) => {
+      return (
+        <div>
+          <SearchBox handlePlaceSelecteds={handlePlaceSelecteds} {...props} />
+        </div>
+      );
+    })
+  );
+
+  return (
+    <div>
+      <AsyncMap
+        key="0"
+        googleMapURL={MAPS_URL}
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={
+          <div
+            className="map-container h-100"
+            style={{
+              height: "15px",
+              border: "2px solid #eee",
+              zIndex: "1",
+              borderRadius: "5px",
+            }}
           />
-        </GoogleMapReact>
-      </div>
-    );
-  }
+        }
+        mapElement={
+          <div
+            style={{
+              height: `100%`,
+              borderRadius: "13px",
+              zIndex: "1",
+            }}
+          />
+        }
+        {...props}
+      />
+    </div>
+  );
 }
- 
-export default SimpleMap;
+
+export default Map;
