@@ -3,7 +3,6 @@ import { Form, Button, Col, Table, Modal } from "react-bootstrap";
 import "./Eventdetailform.css";
 import Navbr from "./Navbr";
 import Srch from "./Srch";
-// import React, { useState, useEffect, useRef } from "react";
 const MAPS_URL = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCfMs0nYWjYJPJSF_-obS1biNCEwL2_Pvw&libraries=places`;
 
 export default function Eventdetailform(props) {
@@ -17,55 +16,64 @@ export default function Eventdetailform(props) {
     city: "",
     fromdate: "",
     tilldate: "",
+    id: Math.random(),
   });
-  useEffect(async() => {
-    if (data) {
-     await localStorage.setItem("data", JSON.stringify(data||[]));
-     const localData = localStorage.getItem("data");
-     setData(JSON.parse(localData));
-     await setData(JSON.parse(localData));
-    }
-  }, [data]);
-  useEffect(() => {
-    var localData =  useEffect(async() => {
-      if (data && data.length > 0) {
-       await localStorage.setItem("data", JSON.stringify(data||[]));
-       const localData = localStorage.getItem("data");
-       setData(JSON.parse(localData));
-       await setData(JSON.parse(localData));
-      }
-    }, [data]);localStorage.getItem("data");
-    setData(JSON.parse(localData));
-  }, []);
+
+  // useEffect(() => {
+  //   var localData =  useEffect(() => {
+  //     if (data && data.length > 0) {
+  //       localStorage.setItem("data", JSON.stringify(data||[]));
+  //      const localData = localStorage.getItem("data");
+  //      setData(JSON.parse(localData));
+  //      setData(JSON.parse(localData));
+  //     }
+  //   }, [data]);localStorage.getItem("data");
+  //   setData(JSON.parse(localData));
+  // }, []);
 
   const onSubmit = (e) => {
-    console.log(data, "ppppppppppppppppp",formstate) 
     e.preventDefault();
-    if (formstate.event == "") {
+    if (formstate.event === "") {
       alert("Enter event Title");
-    } else if (formstate.detail == "") {
+    } else if (formstate.detail === "") {
       alert("Enter event details");
-    } else if (formstate.fromdate == "") {
+    } else if (formstate.fromdate === "") {
       alert("enter starting date");
-    } else if (formstate.tilldate == "") {
+    } else if (formstate.tilldate === "") {
       alert("Enter end date");
-    } else if (formstate.city == "") {
+    } else if (formstate.city === "") {
       alert("Enter city name");
     } else {
-      // console.log(data?.filter((val) => val.date === formstate.fromdate),'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
-      let newData = [...data]  
-  
+     
+      const newData =data?[...data]:[]
+       newData.push(formstate);
       setData(newData);
       setHide(!hide);
       setQuery("");
     }
   };
 
+
+  useEffect(() => {
+    if (data) {
+      const localData = localStorage.getItem("data");
+      setData(JSON.parse(localData));
+    }
+  }, []);
+
+  useEffect(()=>{
+    if(data?.length>0){
+      console.log(data,'YYYYYYY')
+      localStorage.setItem('data', JSON.stringify(data));
+    }
+  },[data])
+
   useEffect(() => {
     if (query) {
       setformState({ ...formstate, city: query });
     }
   }, [query]);
+
   const handleHide = () => {
     setformState({
       ...formstate,
@@ -78,13 +86,13 @@ export default function Eventdetailform(props) {
     setHide(!hide);
   };
 
-  useEffect(() => {
-    if (duplicateCity) {
-      alert(`${formstate.city} already booked  for event`);
-    } else {
-      setDuplicateCity(false);
-    }
-  }, [duplicateCity]);
+  // useEffect(() => {
+  //   if (duplicateCity) {
+  //     alert(`${formstate.city} already booked  for event`);
+  //   } else {
+  //     setDuplicateCity(false);
+  //   }
+  // }, [duplicateCity]);
 
   // const checkInput = (e) => {
   //   setformState({ ...formstate, city: e.target.value });
@@ -100,30 +108,35 @@ export default function Eventdetailform(props) {
 
   const handleClose = () => setShow(false);
 
-  const handleDateChange = (e) => {
-    setformState({ ...formstate, fromdate: e.target.value });
-    console.log(e.target.value, "JJJJJJJ", data);
-    if(data?.length>0){
-data.map(dates=>{
-  console.log(JSON.stringify(dates.fromdate)===JSON.stringify(e.target.value),'UUUUUUU')
-})
-    }
-    else{
-      setformState({ ...formstate, fromdate: e.target.value });
-    }
-    // if (data.length > 0) {
-    //   data.map((val) => {
-    //     if (val.fromdate === e.target.value) {
-    //       alert("Invalid date");
-    //     } else {
-    //       setformState({ ...formstate, fromdate: "" });
-    //     }
-    //   });
-    // } else {
-    //   setformState({ ...formstate, fromdate: e.target.value });
-    // }
+  // const handleDateChange = (e) => {
+  //   setformState({ ...formstate, fromdate: e.target.value });
+  //   console.log(e.target.value, "JJJJJJJ", data);
+  //   if(data?.length>0){
+  //   data.map(dates=>{
+  //   console.log(JSON.stringify(dates.fromdate)===JSON.stringify(e.target.value),'UUUUUUU')
+  //   })
+  //   }
+  //   else{
+  //     setformState({ ...formstate, fromdate: e.target.value });
+  //   }
+  // if (data.length > 0) {
+  //   data.map((val) => {
+  //     if (val.fromdate === e.target.value) {
+  //       alert("Invalid date");
+  //     } else {
+  //       setformState({ ...formstate, fromdate: "" });
+  //     }
+  //   });
+  // } else {
+  //   setformState({ ...formstate, fromdate: e.target.value });
+  // }
+  // };
+
+  // For edit event
+
+  const editEvent = (id) => {
+    alert("change the details");
   };
-  console.log(formstate, "RRRRRRRR");
   return (
     <>
       <Modal show={show} onHide={() => setShow(false)}>
@@ -149,6 +162,7 @@ data.map(dates=>{
                   <th>Starting date</th>
                   <th>End date</th>
                   <th>City</th>
+                  <th></th>
                 </tr>
               </thead>
               {data?.map((val) => {
@@ -161,6 +175,11 @@ data.map(dates=>{
                         <td>{val?.fromdate}</td>
                         <td>{val?.tilldate}</td>
                         <td>{val?.city}</td>
+                        <td>
+                          <button onClick={() => editEvent(formstate.id)}>
+                            Edit
+                          </button>
+                        </td>
                       </tr>
                     </tbody>
                   </>
@@ -208,9 +227,9 @@ data.map(dates=>{
                   type="date"
                   name="date"
                   value={formstate.fromdate}
-                  onChange={(e) =>handleDateChange(e)}
-                    // setformState({ ...formstate, fromdate: e.target.value })
-                  
+                  onChange={(e) =>
+                    setformState({ ...formstate, fromdate: e.target.value })
+                  }
                 />
               </Form.Group>
 
@@ -243,7 +262,7 @@ data.map(dates=>{
             <Button variant="success" className="rajat" onClick={onSubmit}>
               Book Event
             </Button>{" "}
-            <Button className="View" onclick={() => setHide(false)}>
+            <Button className="View" onclick={() => setHide(!hide)}>
               Show Table
             </Button>
           </Form>
