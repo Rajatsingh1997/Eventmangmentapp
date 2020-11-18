@@ -9,20 +9,22 @@ export default function Eventdetailform(props) {
   const [hide, setHide] = useState(true);
   const [data, setData] = useState([]);
   const [edit, setEdit] = useState(false);
+  const [table, setTable] = useState(true);
   const [query, setQuery] = useState("");
-  const [duplicateCity, setDuplicateCity] = useState(false);
   const [formstate, setformState] = useState({
     event: "",
     detail: "",
     city: "",
     fromdate: "",
     tilldate: "",
-    id:'',
+    id: "",
   });
+
+  // validation
 
   const onSubmit = (e) => {
     e.preventDefault();
-    
+
     if (formstate.event === "") {
       alert("Enter event Title");
     } else if (formstate.detail === "") {
@@ -35,17 +37,19 @@ export default function Eventdetailform(props) {
       alert("Enter city name");
     } else {
       const newData = data ? [...data] : [];
-      const newFormData={
-        ...formstate,id:Math.random()
-      }
+      const newFormData = {
+        ...formstate,
+        id: Math.random(),
+      };
       newData.push(newFormData);
       setData(newData);
-      // console.log(data.filter(value=>value.id===formstate.id),'ddddddddddddddddddddddddddddddddd')
       console.log(data, "ddddddddddddddddddd");
       setHide(!hide);
       setQuery("");
     }
   };
+
+  // Local storage
 
   useEffect(() => {
     if (data) {
@@ -87,10 +91,9 @@ export default function Eventdetailform(props) {
     handleHide();
     setformState(val);
   };
-  // data[data.length - 1];
-
+  // update event
   const onEdit = () => {
-    console.log(data,'JJJJJJJJ',formstate)
+    console.log(data, "JJJJJJJJ", formstate);
 
     const newData = data?.map((val) => {
       if (val.id === formstate.id) {
@@ -107,9 +110,9 @@ export default function Eventdetailform(props) {
     setEdit(false);
     setHide(false);
   };
-  const showList=()=>{
-    setHide(false)
-  }
+  // const showList=()=>{
+  //   setHide(false)
+  // }
 
   return (
     <>
@@ -118,16 +121,18 @@ export default function Eventdetailform(props) {
         <>
           <div className="list">
             <Table striped bordered hover variant="dark">
-              <thead>
-                <tr>
-                  <th>Event title</th>
-                  <th>Event detail</th>
-                  <th>Starting date</th>
-                  <th>End date</th>
-                  <th>City</th>
-                  <th></th>
-                </tr>
-              </thead>
+              
+                <thead>
+                  <tr>
+                    <th>Event title</th>
+                    <th>Event detail</th>
+                    <th>Starting date</th>
+                    <th>End date</th>
+                    <th>City</th>
+                    <th></th>
+                  </tr>
+                </thead>
+              
               {data?.map((val) => {
                 return (
                   <>
@@ -156,6 +161,35 @@ export default function Eventdetailform(props) {
       )}
       {hide && (
         <div className="formshows">
+          <Table striped bordered hover>
+          { data && data.length?
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Event Detail</th>
+                <th>From</th>
+                <th>Till</th>
+                <th>City</th>
+              </tr>
+            </thead>
+            :null}
+            {data?.map((val) => {
+              return (
+                <>
+                  <tbody>
+                    <tr>
+                      <td>{val?.event}</td>
+                      <td>{val?.detail}</td>
+                      <td>{val?.fromdate}</td>
+                      <td>{val?.tilldate}</td>
+                      <td>{val?.city}</td>
+                    </tr>
+                  </tbody>
+                </>
+              );
+            })}
+          </Table>
+
           <Form noValidate>
             <Form.Group controlId="formGridAddress2">
               <Form.Label>Event Title</Form.Label>
@@ -214,13 +248,11 @@ export default function Eventdetailform(props) {
               <Button variant="success" className="rajat" onClick={onEdit}>
                 Update Event
               </Button>
-            ) : (<div>
-              <Button variant="success" className="rajat" onClick={onSubmit}>
-                Book Event
-              </Button>
-               <Button variant="success" className="rajat" onClick={showList}>
-                All event
-              </Button>
+            ) : (
+              <div>
+                <Button variant="success" className="rajat" onClick={onSubmit}>
+                  Book Event
+                </Button>
               </div>
             )}
           </Form>
