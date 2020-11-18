@@ -107,6 +107,9 @@ export default function Eventdetailform(props) {
     setEdit(false);
     setHide(false);
   };
+  const showList=()=>{
+    setHide(false)
+  }
 
   return (
     <>
@@ -211,10 +214,14 @@ export default function Eventdetailform(props) {
               <Button variant="success" className="rajat" onClick={onEdit}>
                 Update Event
               </Button>
-            ) : (
+            ) : (<div>
               <Button variant="success" className="rajat" onClick={onSubmit}>
                 Book Event
               </Button>
+               <Button variant="success" className="rajat" onClick={showList}>
+                All event
+              </Button>
+              </div>
             )}
           </Form>
         </div>

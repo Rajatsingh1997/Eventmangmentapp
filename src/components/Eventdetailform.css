@@ -21,6 +21,8 @@
 .btn:not(:disabled):not(.disabled) {
   cursor: pointer;
   margin-top: 23px;
+  margin-right:10px;
+
 }
 
 .list {
